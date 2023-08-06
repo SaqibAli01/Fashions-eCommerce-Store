@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { removeFromCart } from "../../ReduxToolKit/carts";
+import OrderDialog from "./OrderDialg";
 // import { removeFromCart } from "../../ReduxToolKit/cartSlice";
 
 const CartItem = ({ item }) => {
@@ -82,9 +83,19 @@ const Cart = () => {
     cartItems.reduce((total, item) => total + item.price, 0)
   );
 
+  const [isOrderDialogOpen, setIsOrderDialogOpen] = useState(false);
+
   const handleOrder = () => {
+    setIsOrderDialogOpen(true);
+  };
+
+  const handleCloseOrderDialog = () => {
+    setIsOrderDialogOpen(false);
+  };
+
+  const handleSubmitOrder = (orderData) => {
     // Handle the order process here
-    console.log("Order placed!");
+    console.log("Order placed:", orderData);
   };
 
   return (
@@ -112,6 +123,11 @@ const Cart = () => {
           </Button>
         </Paper>
       </Grid>
+      <OrderDialog
+        open={isOrderDialogOpen}
+        onClose={handleCloseOrderDialog}
+        onSubmit={handleSubmitOrder}
+      />
     </Grid>
   );
 };
